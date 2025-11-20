@@ -64,6 +64,6 @@ Automate database backups (scripts/backup-db.php).
 
 
 
-Security audit (input validation, file uploads, session handling)w which part to implement next!
+
 
 GPT-4.1 • 1x
