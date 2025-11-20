@@ -1,0 +1,153 @@
+/* frontend/assets/css/custom/main.css */
+:root {
+    --primary-color: #dd7028;
+    --secondary-color: #d8e941;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1f2937;
+    --light-color: #f8fafc;
+}
+
+@import 'auth.css';
+@import 'forms.css';
+@import 'dashboard.css';
+@import 'responsive.css';
+
+/* Rest of the existing main.css styles remain the same */
+.min-vh-80 { min-height: 80vh; }
+.hero-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+.min-vh-80 {
+    min-height: 80vh;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.hero-graphic {
+    position: relative;
+    height: 400px;
+}
+
+.floating-card {
+    position: absolute;
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.card-1 {
+    top: 20%;
+    left: 10%;
+    animation: float 3s ease-in-out infinite;
+}
+
+.card-2 {
+    top: 50%;
+    right: 10%;
+    animation: float 3s ease-in-out infinite 1s;
+}
+
+.card-3 {
+    bottom: 20%;
+    left: 30%;
+    animation: float 3s ease-in-out infinite 2s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.hover-shadow {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.category-card {
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Custom button styles */
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Dashboard cards */
+.dashboard-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Problem cards */
+.problem-card {
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.problem-card:hover {
+    transform: translateX(5px);
+}
+
+/* Budget badge */
+.budget-badge {
+    background: linear-gradient(135deg, var(--success-color), #34d399);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-graphic {
+        height: 200px;
+        margin-top: 2rem;
+    }
+    
+    .floating-card {
+        position: relative;
+        margin-bottom: 1rem;
+        animation: none;
+    }
+    
+    .card-1, .card-2, .card-3 {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+}

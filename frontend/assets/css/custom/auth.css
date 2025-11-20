@@ -1,0 +1,47 @@
+/* frontend/assets/css/custom/auth.css */
+.auth-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.auth-divider {
+    position: relative;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #dee2e6;
+}
+
+.auth-divider span {
+    background: white;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-social {
+    border: 2px solid #dee2e6;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-social:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}

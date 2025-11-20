@@ -1,0 +1,10 @@
+<!-- frontend/pages/auth/logout.php -->
+<?php
+// This would normally handle session destruction
+session_start();
+session_destroy();
+
+// Redirect to home page
+header('Location: ../../../index.php');
+exit;
+?>

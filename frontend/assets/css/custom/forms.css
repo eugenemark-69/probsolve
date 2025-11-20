@@ -1,0 +1,45 @@
+/* frontend/assets/css/custom/forms.css */
+.form-floating-custom {
+    position: relative;
+}
+
+.form-floating-custom label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+}
+
+.form-floating-custom .form-control {
+    padding: 1rem 0.75rem;
+}
+
+.form-floating-custom .form-control:focus ~ label,
+.form-floating-custom .form-control:not(:placeholder-shown) ~ label {
+    opacity: .65;
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+/* Custom file upload */
+.file-upload {
+    border: 2px dashed #dee2e6;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.file-upload:hover {
+    border-color: var(--primary-color);
+    background-color: #f8f9fa;
+}
+
+.file-upload.dragover {
+    border-color: var(--primary-color);
+    background-color: #e7f1ff;
+}

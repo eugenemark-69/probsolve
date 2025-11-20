@@ -1,0 +1,48 @@
+/* frontend/assets/css/custom/dashboard.css */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-card.success {
+    border-left-color: var(--success-color);
+}
+
+.stat-card.warning {
+    border-left-color: var(--warning-color);
+}
+
+.stat-card.danger {
+    border-left-color: var(--danger-color);
+}
+
+.activity-feed {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    padding: 1rem;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    background-color: #f8f9fa;
+    border-left-color: var(--primary-color);
+}
+
+.activity-item.unread {
+    background-color: #e7f1ff;
+    border-left-color: var(--primary-color);
+}
