@@ -10,8 +10,8 @@
       <form id="loginForm">
         <div class="modal-body">
           <div class="mb-3">
-            <label for="loginEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="loginEmail" name="email" required>
+            <label for="loginUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="loginUsername" name="username" required>
           </div>
           <div class="mb-3">
             <label for="loginPassword" class="form-label">Password</label>
@@ -39,8 +39,8 @@
       <form id="registerForm">
         <div class="modal-body">
           <div class="mb-3">
-            <label for="registerName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="registerName" name="name" required>
+            <label for="registerUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="registerUsername" name="username" required>
           </div>
           <div class="mb-3">
             <label for="registerEmail" class="form-label">Email address</label>

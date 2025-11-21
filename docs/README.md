@@ -56,6 +56,3 @@ Load testing and performance tuning.
 Prepare launch marketing and onboarding content.
 Pro Tip: Work iteratively—ship MVP, gather feedback, and improve. Use Git for version control, and keep code modular and well-documented.
 
-If you want code for a specific module or page, let me know which part to implement next!
-
-GPT-4.1 • 1x

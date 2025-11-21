@@ -19,11 +19,45 @@ function initializeSocketConnection() {
     socket.on('chat_message', function(data) {
         window.showNotification(`New message from ${data.sender}: ${data.message}`, 'info');
         // Optionally update chat modal
+        // Update header unread badge if present
+        try {
+            const btn = document.getElementById('header-user-btn');
+            if (btn) {
+                let badge = btn.querySelector('.badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge bg-danger ms-2';
+                    badge.textContent = '1';
+                    btn.appendChild(badge);
+                } else {
+                    badge.textContent = String(parseInt(badge.textContent || '0') + 1);
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
     });
 
     // Listen for notifications
     socket.on('notification', function(data) {
         window.showNotification(data.message, data.type || 'info');
+        // Increment header badge
+        try {
+            const btn = document.getElementById('header-user-btn');
+            if (btn) {
+                let badge = btn.querySelector('.badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge bg-danger ms-2';
+                    badge.textContent = '1';
+                    btn.appendChild(badge);
+                } else {
+                    badge.textContent = String(parseInt(badge.textContent || '0') + 1);
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
     });
 
     // Listen for real-time problem/solution updates

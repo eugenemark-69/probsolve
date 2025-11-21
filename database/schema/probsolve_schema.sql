@@ -81,12 +81,12 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 -- Indexes for performance
-CREATE INDEX idx_user_role ON users(role);
-CREATE INDEX idx_problem_status ON problems(status);
-CREATE INDEX idx_solution_status ON solutions(status);
-CREATE INDEX idx_transaction_status ON transactions(status);
+CREATE INDEX IF NOT EXISTS idx_user_role ON users(role);
+CREATE INDEX IF NOT EXISTS idx_problem_status ON problems(status);
+CREATE INDEX IF NOT EXISTS idx_solution_status ON solutions(status);
+CREATE INDEX IF NOT EXISTS idx_transaction_status ON transactions(status);
 
--- Sample admin user (password: admin123, hash to be set manually)
-INSERT INTO users (username, email, password_hash, role, is_verified) VALUES ('admin', 'admin@probsolve.com', '$2y$10$REPLACE_WITH_HASH', 'admin', 1);
+-- Sample admin user (password: admin123)
+INSERT IGNORE INTO users (username, email, password_hash, role, is_verified) VALUES ('admin', 'admin@probsolve.com', '$2y$10$YourHashHereReplace', 'admin', 1);
 
 -- End of schema
