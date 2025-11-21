@@ -22,9 +22,9 @@ include '../../includes/header.php';
                         <!-- Login Form -->
                         <form id="loginForm">
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email Address *</label>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       placeholder="your@email.com" required>
+                                <label for="username" class="form-label">Username *</label>
+                                <input type="text" class="form-control" id="username" name="username" 
+                                       placeholder="your username" required>
                             </div>
 
                             <div class="mb-3">
@@ -40,6 +40,9 @@ include '../../includes/header.php';
                                 <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                             </div>
+
+                            <div id="loginError" class="alert alert-danger d-none mb-3"></div>
+                            <div id="loginSuccess" class="alert alert-success d-none mb-3"></div>
 
                             <div class="d-grid mb-4">
                                 <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
@@ -100,50 +103,51 @@ include '../../includes/header.php';
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
-    const demoButtons = document.querySelectorAll('.demo-login');
-
-    // Demo login functionality
-    demoButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const role = this.getAttribute('data-role');
-            const credentials = {
-                'asker': { email: 'demo_asker@probsolve.com', password: 'demo123' },
-                'solver': { email: 'demo_solver@probsolve.com', password: 'demo123' }
-            };
-
-            document.getElementById('email').value = credentials[role].email;
-            document.getElementById('password').value = credentials[role].password;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                alert(`Logging in as ${role} demo user...`);
-                window.location.href = role === 'asker' ? 
-                    '/probsolve/frontend/pages/asker/dashboard.php' : 
-                    '/probsolve/frontend/pages/solver/dashboard.php';
-            }, 1000);
-        });
-    });
 
     // Form submission
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Add your login logic here
-        const email = document.getElementById('email').value;
+        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const errorEl = document.getElementById('loginError');
+        const successEl = document.getElementById('loginSuccess');
         
-        // Simulate login process
-        console.log('Login attempt:', { email, password });
+        errorEl.classList.add('d-none');
+        successEl.classList.add('d-none');
         
-        // For demo purposes, redirect to appropriate dashboard
-        if (email.includes('asker')) {
-            window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
-        } else if (email.includes('solver')) {
-            window.location.href = '/probsolve/frontend/pages/solver/dashboard.php';
-        } else {
-            // Default redirect
-            window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
-        }
+        fetch('/probsolve/backend/api/auth/login.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+            credentials: 'same-origin'
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                successEl.textContent = 'Login successful! Redirecting...';
+                successEl.classList.remove('d-none');
+                
+                // Redirect based on role
+                setTimeout(() => {
+                    const role = data.user?.role;
+                    if (role === 'solver') {
+                        window.location.href = '/probsolve/frontend/pages/solver/dashboard.php';
+                    } else if (role === 'admin') {
+                        window.location.href = '/probsolve/frontend/pages/admin/dashboard.php';
+                    } else {
+                        window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
+                    }
+                }, 1000);
+            } else {
+                errorEl.textContent = data.error || 'Login failed';
+                errorEl.classList.remove('d-none');
+            }
+        })
+        .catch(err => {
+            errorEl.textContent = 'Error: ' + err.message;
+            errorEl.classList.remove('d-none');
+        });
     });
 });
 </script>

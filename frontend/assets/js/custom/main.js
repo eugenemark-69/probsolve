@@ -105,6 +105,154 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // ========== LOGIN & REGISTER MODAL FORM HANDLERS ==========
+
+    // Handle Login Form Submission
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const errorAlert = document.getElementById('loginError');
+            
+            if (!username || !password) {
+                errorAlert.textContent = 'Please enter both username and password';
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            
+            // Clear previous errors
+            errorAlert.classList.add('d-none');
+            errorAlert.textContent = '';
+            
+            // Disable submit button
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            // Send AJAX request
+            fetch('/probsolve/backend/api/auth/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification('✓ ' + (data.message || 'Login successful!'), 'success');
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (data.user.role === 'admin') {
+                            window.location.href = '/probsolve/frontend/pages/admin/dashboard.php';
+                        } else if (data.user.role === 'solver') {
+                            window.location.href = '/probsolve/frontend/pages/solver/dashboard.php';
+                        } else {
+                            window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
+                        }
+                    }, 1000);
+                } else {
+                    errorAlert.textContent = '✗ ' + (data.error || 'Login failed');
+                    errorAlert.classList.remove('d-none');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Login';
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                errorAlert.textContent = '✗ An error occurred. Please try again.';
+                errorAlert.classList.remove('d-none');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            });
+        });
+    }
+
+    // Handle Register Form Submission
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const errorAlert = document.getElementById('registerError');
+            
+            if (!username || !email || !password) {
+                errorAlert.textContent = 'Please fill in all fields';
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            
+            if (password.length < 4) {
+                errorAlert.textContent = 'Password must be at least 4 characters';
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                errorAlert.textContent = 'Please enter a valid email address';
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            
+            // Clear previous errors
+            errorAlert.classList.add('d-none');
+            errorAlert.textContent = '';
+            
+            // Disable submit button
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing up...';
+            
+            // Send AJAX request
+            fetch('/probsolve/backend/api/auth/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification('✓ ' + (data.message || 'Signup successful! Redirecting to login...'), 'success');
+                    // Clear form
+                    registerForm.reset();
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    if (modal) modal.hide();
+                    // Switch to login modal after 1.5 seconds
+                    setTimeout(() => {
+                        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                        loginModal.show();
+                    }, 1500);
+                } else {
+                    errorAlert.textContent = '✗ ' + (data.error || 'Signup failed');
+                    errorAlert.classList.remove('d-none');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Sign Up';
+                }
+            })
+            .catch(error => {
+                console.error('Registration error:', error);
+                errorAlert.textContent = '✗ An error occurred. Please try again.';
+                errorAlert.classList.remove('d-none');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Up';
+            });
+        });
+    }
 });
 
 function updateBudgetDisplay() {
