@@ -131,12 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Redirect based on role
                 setTimeout(() => {
                     const role = data.user?.role;
-                    if (role === 'solver') {
-                        window.location.href = '/probsolve/frontend/pages/solver/dashboard.php';
-                    } else if (role === 'admin') {
+                    if (role === 'admin') {
                         window.location.href = '/probsolve/frontend/pages/admin/dashboard.php';
                     } else {
-                        window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
+                        window.location.href = '/probsolve/frontend/pages/dashboard.php';
                     }
                 }, 1000);
             } else {
