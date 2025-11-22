@@ -1,4 +1,5 @@
 <?php
+// Create a new comment on a problem
 session_start();
 require_once '../../config/database.php';
 header('Content-Type: application/json');
@@ -25,9 +26,8 @@ if (empty($data['problem_id']) || empty($data['content'])) {
 
 try {
     $db = Database::getConnection();
-    
     $stmt = $db->prepare("
-        INSERT INTO solutions (problem_id, solver_id, content)
+        INSERT INTO comments (problem_id, user_id, content)
         VALUES (?, ?, ?)
     ");
     
@@ -37,15 +37,14 @@ try {
         $data['content']
     ]);
     
-    // Update problem solutions_count
+    // Update problem comments_count
     $updateStmt = $db->prepare("
-        UPDATE problems SET solutions_count = solutions_count + 1
+        UPDATE problems SET comments_count = comments_count + 1
         WHERE id = ?
     ");
     $updateStmt->execute([$data['problem_id']]);
     
-    http_response_code(201);
-    echo json_encode(['success' => true, 'message' => 'Solution submitted']);
+    echo json_encode(['success' => true, 'message' => 'Comment created']);
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => $e->getMessage()]);

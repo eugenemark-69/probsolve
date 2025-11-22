@@ -44,7 +44,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/probsolve/frontend/pages/public/explore.php">Explore</a>
+                        <a class="nav-link" href="/probsolve/frontend/pages/browse-problems.php">Browse Problems</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/probsolve/frontend/pages/public/problem-gallery.php">Problem Gallery</a>
@@ -65,14 +65,11 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <li><a class="dropdown-item" href="/probsolve/frontend/pages/user/about.php"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 
-                                <!-- Role-Specific Dashboard -->
-                                <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'asker'): ?>
-                                    <li><a class="dropdown-item" href="/probsolve/frontend/pages/asker/dashboard.php"><i class="fas fa-chart-line me-2"></i>Asker Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="/probsolve/frontend/pages/asker/my-problems.php"><i class="fas fa-question-circle me-2"></i>My Problems</a></li>
-                                <?php elseif(isset($_SESSION['role']) && $_SESSION['role'] === 'solver'): ?>
-                                    <li><a class="dropdown-item" href="/probsolve/frontend/pages/solver/dashboard.php"><i class="fas fa-chart-line me-2"></i>Solver Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="/probsolve/frontend/pages/solver/my-solutions.php"><i class="fas fa-lightbulb me-2"></i>My Solutions</a></li>
-                                <?php elseif(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                <!-- Dashboard -->
+                                <li><a class="dropdown-item" href="/probsolve/frontend/pages/dashboard.php"><i class="fas fa-chart-line me-2"></i>My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/probsolve/frontend/pages/browse-problems.php"><i class="fas fa-search me-2"></i>Browse Problems</a></li>
+                                <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="/probsolve/frontend/pages/admin/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</a></li>
                                     <li><a class="dropdown-item" href="/probsolve/frontend/pages/admin/moderation.php"><i class="fas fa-gavel me-2"></i>Moderation</a></li>
                                 <?php endif; ?>
@@ -106,12 +103,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <!-- Bootstrap JS (for navbar toggling, dropdowns, etc.) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom Main JS with form handlers -->
+    <!-- Custom Main JS with form handlers -->
 <script src="/probsolve/frontend/assets/js/custom/main.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch header info to enable dynamic badges and menu updates
-    fetch('/probsolve/backend/api/user/header-info.php', { credentials: 'same-origin' })
+    fetch('/backend/api/user/header-info.php', { credentials: 'same-origin' })
         .then(r => r.json())
         .then(data => {
             if (!data || !data.logged_in) return;
@@ -168,5 +165,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 </script>
-</body>
-</html>

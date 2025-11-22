@@ -153,10 +153,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         if (data.user.role === 'admin') {
                             window.location.href = '/probsolve/frontend/pages/admin/dashboard.php';
-                        } else if (data.user.role === 'solver') {
-                            window.location.href = '/probsolve/frontend/pages/solver/dashboard.php';
                         } else {
-                            window.location.href = '/probsolve/frontend/pages/asker/dashboard.php';
+                            window.location.href = '/probsolve/frontend/pages/dashboard.php';
                         }
                     }, 1000);
                 } else {
